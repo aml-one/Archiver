@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Archiver.Core/Archiver.Core.csproj" />
+    <Project Path="src/Archiver.Service/Archiver.Service.csproj" />
+    <Project Path="src/Archiver.UI/Archiver.UI.csproj" />
+  </Folder>
+</Solution>

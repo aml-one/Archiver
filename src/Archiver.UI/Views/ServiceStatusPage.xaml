@@ -1,0 +1,108 @@
+<UserControl x:Class="Archiver.UI.Views.ServiceStatusPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:Archiver.UI.Converters">
+    <UserControl.Resources>
+        <converters:BoolToColorConverter x:Key="BoolToColor"/>
+        <converters:InverseBoolConverter x:Key="InverseBool"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24,20">
+
+            <!-- Service Status Card -->
+            <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1"
+                    CornerRadius="6" Padding="24" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="Service Status" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Status Indicator -->
+                        <Ellipse Grid.Row="0" Grid.Column="0" Width="48" Height="48"
+                                 Fill="{Binding IsRunning, Converter={StaticResource BoolToColor}}"
+                                 Stroke="#E0E0E0" StrokeThickness="2" Margin="0,0,16,0"/>
+                        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding StatusText}" FontSize="24" FontWeight="SemiBold"/>
+                            <TextBlock Foreground="Gray">
+                                <Run Text="Service: "/><Run Text="Archiver"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Installed status -->
+                        <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,8,0,0"
+                                   Foreground="Gray" FontSize="13">
+                            <Run Text="Installed: "/>
+                            <Run Text="{Binding IsInstalled}" FontWeight="SemiBold"/>
+                        </TextBlock>
+
+                        <!-- Error -->
+                        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,8,0,0"
+                                   Foreground="{StaticResource RedBrush}" FontSize="13"
+                                   Text="{Binding ErrorMessage}"
+                                   Visibility="{Binding ErrorMessage, Converter={x:Null}}"/>
+
+                        <!-- Admin warning -->
+                        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,8,0,0"
+                                   Foreground="#FF9800" FontSize="13"
+                                   Text="⚠ Run as Administrator to start/stop the service."
+                                   Visibility="{Binding IsElevated, Converter={StaticResource InverseBool}}"/>
+                    </Grid>
+
+                    <!-- Control Buttons -->
+                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                        <Button Content="▶ Start" Width="100" Height="36"
+                                Command="{Binding StartServiceCommand}"
+                                IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBool}}"
+                                Background="{StaticResource GreenBrush}" Foreground="White"
+                                BorderThickness="0" Margin="0,0,8,0"/>
+                        <Button Content="⏹ Stop" Width="100" Height="36"
+                                Command="{Binding StopServiceCommand}"
+                                IsEnabled="{Binding IsRunning}"
+                                Background="{StaticResource RedBrush}" Foreground="White"
+                                BorderThickness="0" Margin="0,0,8,0"/>
+                        <Button Content="🔄 Refresh" Width="100" Height="36"
+                                Command="{Binding RefreshStatusCommand}"
+                                Background="{StaticResource AccentBrush}" Foreground="White"
+                                BorderThickness="0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Recent Logs -->
+            <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1"
+                    CornerRadius="6" Padding="24">
+                <StackPanel>
+                    <TextBlock Text="Recent Activity" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+
+                    <ListBox ItemsSource="{Binding RecentLogs}" MaxHeight="300"
+                             BorderThickness="0" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="{Binding Level}" Width="80" FontSize="12"
+                                               FontFamily="Consolas" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm:ss}'}"
+                                               Width="80" FontSize="12" FontFamily="Consolas" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding Message}" FontSize="12"
+                                               FontFamily="Consolas" TextTrimming="CharacterEllipsis"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,41 @@
+# ── Dot directories ────────────────────────────────────────────────
+.*/
+
+# ── Build output ───────────────────────────────────────────────────
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+out/
+publish/
+
+# ── .NET ───────────────────────────────────────────────────────────
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.tmp
+*.tmp_proj
+*.log
+*.vs/
+.vscode/
+.claude/
+project.lock.json
+*.nuget.props
+*.nuget.targets
+NuGet.config
+packages/
+
+# ── IDE ────────────────────────────────────────────────────────────
+*.swp
+*.*~
+.idea/
+*.sln.ide/
+
+# ── OS ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
