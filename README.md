@@ -4,9 +4,6 @@
 
 Archiver copies files from configurable source folders to network shares (and optionally local/USB drives) on a schedule. It can also trim source folders by age to free up disk space. A WPF desktop app provides graphical management of jobs, logs, and the service.
 
-<p align="center">
-  <img src="docs/screenshot.png" alt="Archiver UI" width="800">
-</p>
 
 ---
 
